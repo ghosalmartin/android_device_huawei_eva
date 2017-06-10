@@ -55,4 +55,5 @@ on boot
     class main
     user system
     group system
+    setenv LD_LIBRARY_PATH /vendor/lib:/system/lib
     disabled

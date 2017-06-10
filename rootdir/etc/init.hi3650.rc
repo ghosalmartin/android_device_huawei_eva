@@ -27,14 +27,14 @@
 
 import /init.hi3650.gps.rc
 import /init.hi3650.power.rc
-import /init.hi3650.usb.rc
+#import /init.hi3650.usb.rc
 
 on early-init
     chmod 0660 /dev/hwlog_switch
     chown logd system /dev/hwlog_switch
     chmod 0660 /dev/hwlog_tag
     chown system system /dev/hwlog_tag
-    chmod 0662 /dev/hwlog_jank
+    #chmod 0662 /dev/hwlog_jank
 
 on init
     # NFC
@@ -52,7 +52,7 @@ on init
     symlink /sdcard /mnt/sdcard
     symlink /sdcard /storage/sdcard0
 
-    write /sys/block/dm-0/queue/read_ahead_kb 2048
+    #write /sys/block/dm-0/queue/read_ahead_kb 2048
 
     write /sys/module/block2mtd/parameters/block2mtd /dev/block/mmcblk0p7
 
@@ -63,10 +63,10 @@ on init
     chmod 0400 /dev/hisi_teelog
 
     mkdir /dev/frz
-    mount cgroup none /dev/frz freezer
+# Removed during droid-hal-device build :     mount cgroup none /dev/frz freezer
 
     mkdir /sys/fs/cgroup/pids 0750 root system
-    mount cgroup none /sys/fs/cgroup/pids pids
+# Removed during droid-hal-device build :     mount cgroup none /sys/fs/cgroup/pids pids
     mkdir /sys/fs/cgroup/pids/unconfirm_app 0750 root system
     chown root system /sys/fs/cgroup/pids/unconfirm_app/cgroup.procs
     chmod 0660 /sys/fs/cgroup/pids/unconfirm_app/cgroup.procs
@@ -207,7 +207,7 @@ on fs
     #mount_all fstab.hi3650
 
     wait /dev/block/platform/hi_mci.0/by-name/cust
-    mount ext4 /dev/block/platform/hi_mci.0/by-name/cust /cust wait ro nosuid nodev
+# Removed during droid-hal-device build :     mount ext4 /dev/block/platform/hi_mci.0/by-name/cust /cust wait ro nosuid nodev
 
     chown radio radio sys/devices/platform/balong_power/state
 
@@ -481,12 +481,12 @@ on post-fs-data
 
     chown media media /sys/class/graphics/fb0/effect_ce
 
-    setprop persist.sys.kmemleak.debug 0
+    #setprop persist.sys.kmemleak.debug 0
 
     setprop vold.post_fs_data_done 1
 
 on boot
-    write /sys/kernel/debug/kmemleak scan=14400
+    #write /sys/kernel/debug/kmemleak scan=14400
     chown radio radio /proc/modemstatus
 
     chown  system  system  /dev/fingerprint
@@ -505,7 +505,7 @@ on boot
     chown system system /sys/class/graphics/fb0/amoled_vr_mode
     chmod 0660 /sys/class/graphics/fb0/amoled_vr_mode
 
-    write  /sys/devices/platform/antennafpga.0/ice40bin_download_dir "start"
+    #write  /sys/devices/platform/antennafpga.0/ice40bin_download_dir "start"
     chown system system /sys/devices/platform/antennafpga.0/ice40bin_scan_fpga_table
 
     chown root system /proc/key_mask
@@ -665,7 +665,7 @@ on boot
 
     chmod 755 /system/bin/busybox
     write /sys/block/zram0/comp_algorithm lz4
-    swapon_all fstab.hi3650
+    #swapon_all fstab.hi3650
 
     chown radio radio /dev/madapt
     chmod 0660 /dev/madapt
@@ -936,26 +936,26 @@ on data_not_ready
     setprop sys.userdata_is_ready 0
     write /proc/post-fs-data 0
 
-on charger
-    mount_all fstab.hi3650
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor interactive
-    restorecon_recursive /sys/devices/system/cpu/cpu0/cpufreq/interactive
-    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/hispeed_freq 806000
-    chown system  system /sys/devices/system/cpu/cpu0/cpufreq/interactive/boostpulse
-    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/interactive/boostpulse
-    chmod 0660 /sys/class/hw_power/charger/charge_data/iin_thermal
-    chown system system /sys/class/hw_power/charger/charge_data/iin_thermal
-    chmod 0660 /sys/class/hw_power/charger/charge_data/iin_thermal_aux
-    chown system system /sys/class/hw_power/charger/charge_data/iin_thermal_aux
-    chmod 0660 /sys/class/hw_power/charger/charge_data/limit_charging
-    chown system system /sys/class/hw_power/charger/charge_data/limit_charging
-    write /sys/devices/virtual/graphics/fb0/mode "U:1080x1920p-0"
-    start charger_huawei
-    start hw_ueventd
-    start oeminfo_nvm
-    start limit_current
-    start atcmdserver
-    start diagserver
+#on charger
+#    mount_all fstab.hi3650
+#    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor interactive
+#    restorecon_recursive /sys/devices/system/cpu/cpu0/cpufreq/interactive
+#    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/hispeed_freq 806000
+#    chown system  system /sys/devices/system/cpu/cpu0/cpufreq/interactive/boostpulse
+#    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/interactive/boostpulse
+#    chmod 0660 /sys/class/hw_power/charger/charge_data/iin_thermal
+#    chown system system /sys/class/hw_power/charger/charge_data/iin_thermal
+#    chmod 0660 /sys/class/hw_power/charger/charge_data/iin_thermal_aux
+#    chown system system /sys/class/hw_power/charger/charge_data/iin_thermal_aux
+#    chmod 0660 /sys/class/hw_power/charger/charge_data/limit_charging
+#    chown system system /sys/class/hw_power/charger/charge_data/limit_charging
+#    write /sys/devices/virtual/graphics/fb0/mode "U:1080x1920p-0"
+#    start charger_huawei
+#    start hw_ueventd
+#    start oeminfo_nvm
+#    start limit_current
+#    start atcmdserver
+#    start diagserver
 
 # Start Service
 
@@ -1170,8 +1170,8 @@ service data_cleanner /system/bin/data_cleaner
 on property:bastet.service.enable=true
     start bastetd
 
-service jankservice /system/bin/jankservice
-    class late_start
+#service jankservice /system/bin/jankservice
+#    class late_start
 
 service preparesdservice /system/bin/vdc volume storagetosd
    class main
@@ -1235,6 +1235,7 @@ service hwpged /system/bin/hwpged
     class main
     socket MsgHubSock stream 0660 root system
     user root
+    setenv LD_LIBRARY_PATH /vendor/lib:/system/lib
 
 service chargemonitor /system/bin/chargemonitor
     class late_start
