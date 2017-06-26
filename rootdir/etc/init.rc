@@ -694,10 +694,10 @@ service debuggerd64 /system/bin/debuggerd64
     class main
     writepid /dev/cpuset/system-background/tasks
 
-#service surfaceflinger /system/bin/surfaceflinger
-#    class core
-#    user system
-#    group graphics drmrpc
+service surfaceflinger /system/bin/surfaceflinger
+    class core
+    user system
+    group graphics drmrpc
 #    onrestart restart zygote
 
 #service drm /system/bin/drmserver

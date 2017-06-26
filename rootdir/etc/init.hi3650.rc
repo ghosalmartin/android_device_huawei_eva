@@ -1192,6 +1192,7 @@ service logserver /system/bin/logserver
     user root
     group system
     oneshot
+    setenv LD_LIBRARY_PATH /vendor/lib:/system/lib
 
 service hilogcat /system/bin/hilogcat -r16 -z 10 -n 5 -f /data/android_logs/hilogcat-log
     class late_start
